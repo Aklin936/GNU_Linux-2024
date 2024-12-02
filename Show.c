@@ -32,6 +32,20 @@ int main(int argc, char* argv[]) {
 
         WINDOW *win;
         int c = 0;
+
+        initscr();
+        noecho();
+        cbreak();
+        mvprintw(0, 0, "File: %s, lines: %d", argv[1], line_count);
+        refresh();
+
+        int width = COLS - 2 * DX, height = LINES - 2 * DX - 2;
+        win = newwin(LINES-2*DX, COLS-2*DX, DX, DX);
+        keypad(win, TRUE);
+        scrollok (win, TRUE);
+        box(win, 0, 0);
+        wmove(win, 1, 0);
+
         for (i = 0; i < line_count; i++) {
                 free(lines[i]);
         }
