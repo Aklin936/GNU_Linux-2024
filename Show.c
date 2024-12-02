@@ -17,6 +17,21 @@ int main(int argc, char* argv[]) {
                 i++;
         }
 
+        line_count = i;
+
+        fseek(f, 0, SEEK_SET);
+
+        char *lines[line_count];
+
+        for (i = 0; i < line_count; i++) {
+                lines[i] = (char *) malloc(bufsize * sizeof(char));
+                len = getline(&(lines[i]), &bufsize, f);
+                lines[i][strcspn(lines[i], "\n")] = '\0';
+
+        }
+
+        WINDOW *win;
+        int c = 0;
         for (i = 0; i < line_count; i++) {
                 free(lines[i]);
         }
