@@ -12,4 +12,10 @@ int main(int argc, char* argv[]) {
 
         size_t bufsize = 100;
         char *buffer = (char *)malloc(bufsize * sizeof(char));
+
+        for (i = 0; i < line_count; i++) {
+                free(lines[i]);
+        }
+        free(buffer);
+        fclose(f);
 }
