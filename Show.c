@@ -46,6 +46,34 @@ int main(int argc, char* argv[]) {
         box(win, 0, 0);
         wmove(win, 1, 0);
 
+        int line = 0, offset = 0;
+
+        while (1) {
+                werase(win);
+                box(win, 0, 0);
+                wrefresh(win);
+
+                for (i = 1; i <= height; i++) {
+                        mvwprintw(win, i, 1, "%5d: %.*s", line + i, width - 10, lines[line + i] + offset);
+                }
+
+                c = wgetch(win);
+                if (c == 27)
+                        break;
+
+                switch(c) {
+                case KEY_DOWN: line = ((line + height + 2) > line_count) ? line : line + 1; break;
+                case KEY_UP: line = ((line < 1) ? line : line - 1); break;
+                case KEY_RIGHT: offset++; break;
+                case KEY_LEFT: offset = ((offset < 1) ? offset: offset - 1); break;
+                case KEY_NPAGE: line = ((line + 2 * height + 1) > line_count) ? line_count - height - 1 : line + height;; break;
+                case KEY_PPAGE: line = ((line < height) ? 0 : line - height); break;
+                default: continue;
+                }
+        }
+
+        endwin();
+
         for (i = 0; i < line_count; i++) {
                 free(lines[i]);
         }
