@@ -5,4 +5,11 @@ int main(int argc, char* argv[]) {
                 return 1;
         }
         setlocale(LC_ALL, "");
+
+        FILE *f = fopen(argv[1], "rt");
+
+        int line_count = 0, i = 0;
+
+        size_t bufsize = 100;
+        char *buffer = (char *)malloc(bufsize * sizeof(char));
 }
