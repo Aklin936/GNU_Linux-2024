@@ -19,10 +19,17 @@ prog-a: prog.o liboutput_static.a
 prog-so: prog.o liboutput.so
 	cc -L . $< -loutput -o $@
 
+liboutput_static.a: fun.o const.o
+	ar -rcs $@ $?
+
+liboutput.so: fun.o const.o
+	cc -shared $? -o $@
+
+README: prog
+	./$< 2> $@
+
 fun.o:  outlib.h
 
-clean:	distclean
-	rm -f $(TRASH)
 
 distclean:
 	rm -rf $(GENERATES)
