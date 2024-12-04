@@ -7,5 +7,10 @@ int main(int argc, char const *argv[])
 	int M = (argc == 2) ? 0 : atoi(argv[1]);
 	int S = (argc == 4) ? atoi(argv[3]) : 1;
 
+	for (int i = M; i < N; i += S) {
+		printf("%d\n", i);
+	}
+
+
 	return 0;
 }
