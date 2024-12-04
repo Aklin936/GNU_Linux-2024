@@ -20,6 +20,13 @@ int main(int argc, char *argv[]) {
     	exit(1);
     }
 
+    if (errcode = regcomp(&regex, regexp, REG_EXTENDED) != 0) {
+    	regerror(errcode, &regex, msgbuf, sizeof(msgbuf));
+    	fprintf(stderr, "Could not compile regex: %s\n", msgbuf);
+    	exit(2);
+    }
+
+
     if (!(errcode = regexec(&regex, string, MAXGR, bags, 0))) {
         for (int i=0; i < bags[0].rm_so; i++)
     		printf("%c", string[i]);
