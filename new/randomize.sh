@@ -26,6 +26,22 @@ do
     esac
 done < <(printf  "%s\n" "$raw")
 
+data=`echo "$data" | head -n -1 | shuf`
+default=0.05
+
+tput reset
+while IFS= read -r line; do
+    line=($line)
+    row=${line[0]}
+    col=${line[1]}
+    symbol=${line[2]}
+
+    tput cup $row $col
+    sleep ${1:-$default}
+
+    echo -e "\u$symbol"
+
+done < <(printf '%s\n' "$data")
 
 
 tput cup $LINES 0
