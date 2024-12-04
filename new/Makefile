@@ -30,6 +30,28 @@ README: prog
 
 fun.o:  outlib.h
 
+test:	prog prog-a prog-so
+	for param in $(PARAMS); do \
+		./$(word 1, $^) $$param >> file1 2>&1; \
+		./$(word 2, $^) $$param >> file2 2>&1; \
+		LD_LIBRARY_PATH=`pwd` ./$(word 3, $^) $$param >> file3 2>&1; \
+	done
+
+	sed -i "s/$(word 2, $^)/$</g" file2
+	sed -i "s/$(word 3, $^)/$</g" file3
+
+	if cmp file1 file2; then \
+		echo "Files 1 and 2 are identical"; \
+	fi
+	if cmp file2 file3; then \
+		echo "Files 2 and 3 are identical"; \
+	fi
+	if cmp file1 file3; then \
+		echo "Files 1 and 3 are identical"; \
+	fi
+
+clean:	distclean
+	rm -f $(TRASH)
 
 distclean:
 	rm -rf $(GENERATES)
