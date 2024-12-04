@@ -20,6 +20,20 @@ int main(int argc, char *argv[]) {
     	exit(1);
     }
 
+    if (!(errcode = regexec(&regex, string, MAXGR, bags, 0))) {
+        for (int i=0; i < bags[0].rm_so; i++)
+    		printf("%c", string[i]);
+        for (int i=0; i < strlen(substitution); i++) {
+    		printf("%c", substitution[i]);
+    	}
+    	for (int i=bags[0].rm_eo; i < strlen(string); i++) {
+    		printf("%c", string[i]);
+    	}
+
+        printf("\n");
+    }
+
+    regfree(&regex);
 
     return 0;
 }
