@@ -31,7 +31,14 @@ int main(int argc, char *argv[]) {
     	}
 
         printf("\n");
-    }
+
+    } else if (errcode == REG_NOMATCH) {
+    	puts("No match");
+	} else {
+	    regerror(errcode, &regex, msgbuf, sizeof(msgbuf));
+	    fprintf(stderr, "Regex match failed: %s\n", msgbuf);
+	    exit(3);
+	}
 
     regfree(&regex);
 
