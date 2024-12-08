@@ -22,6 +22,11 @@ int main(int argc, char const *argv[])
 		char ans[20];
 		int n = scanf("%s", ans);
 
+		if (!strcasecmp(ans, _("yes"))) {
+			left = mid;
+		} else if (!strcasecmp(ans, _("no"))) {
+			right = mid;
+		}
 
 	}
 
