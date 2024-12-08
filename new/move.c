@@ -7,6 +7,9 @@
 
 int main(int argc, char const *argv[])
 {
+	if (argc < 3) {
+		fprintf(stdout, "%s\n", "help");
+	}
 
     long infile_size = file_status.st_size;
 
