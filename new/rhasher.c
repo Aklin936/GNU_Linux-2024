@@ -38,11 +38,17 @@ int main(int argc, char const *argv[])
 			FLAGS |= RHPR_BASE64;
 		}
 
-
-		if (arg2[0] == '\"') {
-			const char *delim2 = "\"";
-			char *msg = strtok(arg2, delim2);
-			if (rhash_msg(code, msg, strlen(msg), digest) < 0) {
+		int code = 0;
+		if (strcasecmp(arg1, "md5") == 0)
+			code = RHASH_MD5;
+		else if (strcasecmp(arg1, "sha1") == 0)
+			code = RHASH_SHA1;
+		else if (strcasecmp(arg1, "tth") == 0)
+			code = RHASH_TTH;
+		else {
+			fprintf(stderr, "%s\n", "Error. Please enter valid hash type: MD5, SHA1, TTH.");
+			return 1;
+		}
 
 		if (arg2[0] == '\"') {
 			const char *delim2 = "\"";
