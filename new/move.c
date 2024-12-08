@@ -55,6 +55,18 @@ int main(int argc, char const *argv[])
 	fclose(f_in);
 	fclose(f_out);
 
+	if (ferror(f_in)) {
+		remove(argv[2]);
+		perror("Error. Could not read from infile");
+		return 6;
+	}
+
+    if (infile_size != total_bytes * sizeof(char)) {
+    	remove(argv[2]);
+    	fprintf(stderr, "%s\n", "Error. File sizes do not match. Abort moving");
+    	return 7;
+    }
+
 	remove(argv[1]);
 	return 0;
 }
