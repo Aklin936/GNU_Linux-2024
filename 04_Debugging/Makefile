@@ -4,17 +4,17 @@ CFLAGS = -g -o0
 
 .SILENT: test
 
-all:	range
+all: range
 
-range:	range.o
+range: range.o
 
-gdb1:	range
-	gdb --batch --quiet -x gdb-script1 --args ./$< | grep @@@ | cut -c 4- > file1
-
-gdb2:	range
+gdb2: range
 	gdb --batch --quiet -x gdb-script2 --args ./$< | grep @@@ | cut -c 4- > file2
 
-test:	gdb1 gdb2
+gdb1: range
+	gdb --batch --quiet -x gdb-script1 --args ./$< | grep @@@ | cut -c 4- > file1
+
+test: gdb1 gdb2
 	echo "1, 12, 1\n5\n10" > file_ans1
 	echo "-100, 100, 3" > file_ans2 && seq -19 3 2 >> file_ans2
 
