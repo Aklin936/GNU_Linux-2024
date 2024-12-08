@@ -22,6 +22,11 @@ int main(int argc, char const *argv[])
 	size_t linesize = 100;
 	char *line = (char *) malloc(linesize * sizeof(char));
 
+	while (getline(&line, &linesize, stdin) != -1) {
+#else
+	char *line;
+	while ((line = readline("Enter line: ")) != NULL) {
+#endif
 		line[strcspn(line, "\n")] = 0;
 		char *arg1 = strtok(line, delim);
 		char *arg2 = strtok(NULL, delim);
