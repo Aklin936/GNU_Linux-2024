@@ -15,17 +15,6 @@ int main(int argc, char *argv[]) {
     char *substitution = argv[2];
     char *string = argv[3];
 
-    if (argc != 4) {
-    	fprintf(stderr, "Wrong number of arguments, need exactly 3\n");
-    	exit(1);
-    }
-
-    if (errcode = regcomp(&regex, regexp, REG_EXTENDED) != 0) {
-    	regerror(errcode, &regex, msgbuf, sizeof(msgbuf));
-    	fprintf(stderr, "Could not compile regex: %s\n", msgbuf);
-    	exit(2);
-    }
-
 
     if (!(errcode = regexec(&regex, string, MAXGR, bags, 0))) {
         for (int i=0; i < bags[0].rm_so; i++)
