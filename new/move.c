@@ -5,10 +5,23 @@
 
 #define BUFSIZE 1000
 
+
 int main(int argc, char const *argv[])
 {
 	if (argc < 3) {
 		fprintf(stdout, "%s\n", "help");
+	}
+
+	FILE *f_in = fopen(argv[1], "rb");
+	if (f_in == NULL) {
+		perror("Error. Could not open infile");
+		return 1;
+	}
+
+	FILE *f_out = fopen(argv[2], "w");
+	if (f_out == NULL) {
+		perror("Error. Could not open outfile");
+		return 2;
 	}
 
 	struct stat file_status;
@@ -22,6 +35,7 @@ int main(int argc, char const *argv[])
 	char buffer[BUFSIZE];
 	size_t nmemb = sizeof(buffer) / sizeof(char);
 	size_t bytes_read, total_bytes = 0;
+
 
 	while (!feof(f_in)) {
 		bytes_read = fread(buffer, sizeof(char), nmemb, f_in);
@@ -40,21 +54,6 @@ int main(int argc, char const *argv[])
 		total_bytes += bytes_read;
 	}
 
-	FILE *f_in = fopen(argv[1], "rb");
-	if (f_in == NULL) {
-		perror("Error. Could not open infile");
-		return 1;
-	}
-
-	FILE *f_out = fopen(argv[2], "w");
-	if (f_out == NULL) {
-		perror("Error. Could not open outfile");
-		return 2;
-	}
-
-	fclose(f_in);
-	fclose(f_out);
-
 	if (ferror(f_in)) {
 		remove(argv[2]);
 		perror("Error. Could not read from infile");
@@ -67,6 +66,10 @@ int main(int argc, char const *argv[])
     	return 7;
     }
 
+	fclose(f_in);
+	fclose(f_out);
+
 	remove(argv[1]);
+
 	return 0;
 }
