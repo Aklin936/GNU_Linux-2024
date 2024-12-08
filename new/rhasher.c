@@ -66,6 +66,10 @@ int main(int argc, char const *argv[])
 			}
 		}
 
+		if (!rhash_print_bytes(output, digest, rhash_get_digest_size(code), FLAGS)) {
+			fprintf(stderr, "%s\n", "Error. Could not print hash to buffer.");
+			return 3;
+		}
 
 		printf("%s (%s) = %s\n", rhash_get_name(code), arg2, output);
 	}
