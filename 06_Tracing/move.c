@@ -32,6 +32,31 @@ int main(int argc, char const *argv[])
     }
     long infile_size = file_status.st_size;
 
+	char buffer[BUFSIZE];
+	size_t nmemb = sizeof(buffer) / sizeof(char);
+	size_t bytes_read, total_bytes = 0;
+
+
+	while (!feof(f_in)) {
+		bytes_read = fread(buffer, sizeof(char), nmemb, f_in);
+		if (ferror(f_out)) {
+			remove(argv[2]);
+			perror("Error. Could not write to outfile");
+			return 4;
+		}
+
+		if (fwrite(buffer, sizeof(char), bytes_read, f_out) != bytes_read) {
+			remove(argv[2]);
+			fprintf(stderr, "%s\n", "Error. Could not write enough bytes");
+			return 5;
+		}
+
+		total_bytes += bytes_read;
+	}
+
+	if (ferror(f_in)) {
+		remove(argv[2]);
+		perror("Error. Could not read from infile");
 		return 6;
 	}
 
