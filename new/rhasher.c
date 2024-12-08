@@ -34,6 +34,23 @@ int main(int argc, char const *argv[])
 		}
 
 
+		if (arg2[0] == '\"') {
+			const char *delim2 = "\"";
+			char *msg = strtok(arg2, delim2);
+			if (rhash_msg(code, msg, strlen(msg), digest) < 0) {
+				perror("Error. Could not generate hash");
+				return 2;
+			}
+			arg2 = (char *) malloc(strlen(msg) + 3);
+			snprintf(arg2, strlen(msg) + 3, "\"%s\"", msg);
+		} else {
+			if (rhash_file(code, arg2, digest) < 0) {
+				perror("Error. Could not generate hash");
+				return 2;
+			}
+		}
+
+
 		printf("%s (%s) = %s\n", rhash_get_name(code), arg2, output);
 	}
 
