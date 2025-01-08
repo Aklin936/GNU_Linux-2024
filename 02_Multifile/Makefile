@@ -9,7 +9,16 @@ PARAMS =  $(PARAMS0) $(PARAMS1) $(PARAMS2)
 
 .SILENT: test
 
+README: prog
+	./$< 2> $@
+
 all:    README prog prog-a prog-so
+
+liboutput_static.a: fun.o const.o
+	ar -rcs $@ $?
+
+liboutput.so: fun.o const.o
+	cc -shared $? -o $@
 
 prog:   const.o fun.o prog.o
 
@@ -18,17 +27,6 @@ prog-a: prog.o liboutput_static.a
 
 prog-so: prog.o liboutput.so
 	cc -L . $< -loutput -o $@
-
-liboutput_static.a: fun.o const.o
-	ar -rcs $@ $?
-
-liboutput.so: fun.o const.o
-	cc -shared $? -o $@
-
-README: prog
-	./$< 2> $@
-
-fun.o:  outlib.h
 
 test:	prog prog-a prog-so
 	for param in $(PARAMS); do \
