@@ -6,7 +6,7 @@
  * Guess user-picked number by asking simple yes/no questions.
  *
  * This is free and unencumbered software released into the public domain.
- *
+ * 
  * You can specify --roman / -r to use roman numeral system.
  */
 
@@ -19,10 +19,10 @@
 
 /** @file guess.c
  * Implementation
- *
+ * 
  * Rather than randomly guessing the number, this program uses binary search,
  * asking user basic yes/no questions to downsize possible answers list.
- *
+ * 
  */
 
 #define _(STRING) gettext(STRING)
@@ -30,7 +30,7 @@
 const char *argp_program_version =
   "guesser 1.0";
 const char *argp_program_bug_address =
-  "<s02240507@gse.cs.msu.ru>";
+  "<s02200459@gse.cs.msu.ru>";
 
 static char doc[] =
   ("Gueeser -- a minimal program that guesses your number between 1 and 100");
